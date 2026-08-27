@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+import Bar from "../components/Bar.astro";
+import { META } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = META.title, description = META.description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={META.ogDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={META.url} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+  </head>
+  <body>
+    {/* The skip link has to be the first thing focus reaches, so it goes in
+        ahead of the bar's own links. */}
+    <slot name="skip" />
+    <Bar />
+    <slot />
+  </body>
+</html>

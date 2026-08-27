@@ -1,0 +1,34 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { META } from "../../data/site";
+
+export async function getStaticPaths() {
+  const writeups = await getCollection("writeups");
+  return writeups.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<"writeups">;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const w = entry.data;
+const date = w.date.toISOString().slice(0, 10);
+---
+
+<Layout title={`${w.title} - ${META.title}`} description={w.blurb}>
+  <article class="doc">
+    <a class="back" href="/writeups/">../</a>
+
+    <h1>{w.title}</h1>
+    <p class="doc-meta">
+      {w.event} / {w.chal} / {w.cat} / {date} / {w.author}
+    </p>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Layout>

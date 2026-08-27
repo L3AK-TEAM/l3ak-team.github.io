@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NoScriptFallback from "../components/NoScriptFallback.astro";
+import Shell from "../components/shell/Shell";
+import { listWriteups } from "../lib/writeups";
+
+const writeups = await listWriteups();
+---
+
+<Layout>
+  <a class="skip" slot="skip" href="#input">Skip to the command line</a>
+  <Shell client:load writeups={writeups} />
+  <NoScriptFallback writeups={writeups} />
+</Layout>

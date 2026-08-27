@@ -1,0 +1,28 @@
+---
+const SHORTCUTS = [
+  { href: "/writeups/", label: "writeups" },
+  { href: "/team/", label: "team" },
+] as const;
+
+const here = Astro.url.pathname;
+---
+
+<header class="bar">
+  <a class="brand" href="/">
+    {/* Reserve height via intrinsic size */}
+    <img src="/l3ak-logo.png" alt="L3ak" width="423" height="219" />
+  </a>
+  <nav aria-label="Shortcuts">
+    {
+      SHORTCUTS.map((s) => (
+        <a
+          class="cmdbtn"
+          href={s.href}
+          aria-current={here.startsWith(s.href) ? "page" : undefined}
+        >
+          {s.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
