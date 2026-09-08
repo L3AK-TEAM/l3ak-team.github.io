@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0a0c0b"/>
-  <text x="16" y="22" text-anchor="middle" fill="#46d67f"
-        font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
-        font-size="17" font-weight="700">L3</text>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg aria-labelledby="title" role="img" viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg">
+<rect width="1254" height="1254"/>
+<g fill="#26ACA4">
+<path d="m249 248h136v619h568l42 42-104 96h-642z"/>
+<path d="m547 248h328l129 125v112l-82 78 84 83v77l-100 98h-489l99-104h318v-119h-284l-105-109h426v-129h-435z"/>
+</g>
 </svg>
