@@ -549,6 +549,11 @@ a {
   margin-top: 0
 }
 
+.prose img {
+  max-width: 100%;
+  height: auto
+}
+
 .prose .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
