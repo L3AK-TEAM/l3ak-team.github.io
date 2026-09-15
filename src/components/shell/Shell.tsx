@@ -54,7 +54,7 @@ export default function Shell({ writeups }: ShellProps) {
       return [];
     }
 
-    const callback = commands[name];
+    const callback = Object.hasOwn(commands, name) ? commands[name] : undefined;
     if (!callback) {
       return [<div className="out reveal">l3sh: command not found: {name}. try <b>help</b></div>]
     } else {
