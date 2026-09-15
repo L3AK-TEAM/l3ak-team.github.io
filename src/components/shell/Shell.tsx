@@ -1,9 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createCommands } from "./commands";
 import type { Writeup } from "../../lib/writeups";
 import { Prompt } from "./Prompt";
 import Banner from "./Banner";
 import { Command } from "./Log";
+import { PS1 } from "./PS1";
+
+const startupCommands = [
+  { text: "whoami", characterDelay: 45, pauseAfter: 300 },
+  { text: "ls", characterDelay: 60, pauseAfter: 200 },
+];
 
 const prefersReduced = () =>
   typeof matchMedia !== "undefined" &&
@@ -27,18 +33,21 @@ export default function Shell({ writeups }: ShellProps) {
 
   /** The terminal is revealed once boot starts; the prompt once it finishes. */
   const [booted, setBooted] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [startupText, setStartupText] = useState("");
+  const startupIndex = useRef(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   /* ------------------------------------------------------------ transcript */
 
   /** Appends blocks and returns the ids they were given. */
-  function print(blocks: React.ReactNode[], wipe = false) {
+  const print = useCallback((blocks: React.ReactNode[], wipe = false) => {
     const added = blocks.map((b) => ({ id: ++commandId.current, node: b }));
     setScrollback((prev) => (wipe ? [] : prev).concat(added));
-  }
+  }, []);
 
-  function system(command: string): React.ReactNode[] {
+  const system = useCallback((command: string): React.ReactNode[] => {
     const line = command.trim();
     if (!line) return [];
 
@@ -60,7 +69,7 @@ export default function Shell({ writeups }: ShellProps) {
     } else {
       return [...callback(args.concat(pipeArgs))];
     }
-  }
+  }, [commands]);
 
   const scrollToBottom = () =>
     requestAnimationFrame(() =>
@@ -75,12 +84,78 @@ export default function Shell({ writeups }: ShellProps) {
     setBooted(true);
   }, []);
 
-  // The prompt cannot focus itself on mount: the terminal is still `hidden` at
-  // that point, and focus() on a display:none element is a no-op. Focus once
-  // the unhide has been committed instead.
   useEffect(() => {
-    if (booted) inputRef.current?.focus({ preventScroll: true });
-  }, [booted]);
+    let timer: ReturnType<typeof setTimeout>;
+    let finished = false;
+    let character = 0;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function executeNext() {
+      const command = startupCommands[startupIndex.current++];
+      if (command) print([<Command>{command.text}</Command>, ...system(command.text)]);
+    }
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      while (startupIndex.current < startupCommands.length) executeNext();
+      setStartupText("");
+      setReady(true);
+    }
+
+    function typeNext() {
+      const command = startupCommands[startupIndex.current];
+      if (!command) return finish();
+      setStartupText(command.text.slice(0, ++character));
+      if (character < command.text.length) {
+        timer = setTimeout(typeNext, command.characterDelay);
+      } else {
+        timer = setTimeout(() => {
+          executeNext();
+          setStartupText("");
+          character = 0;
+          timer = setTimeout(typeNext, command.pauseAfter);
+        }, 200);
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape" && !finished) {
+        event.preventDefault();
+        finish();
+      }
+    }
+
+    function handleSkip(event: MouseEvent) {
+      if ((event.target as Element).closest('a[href="#input"]') && !finished) {
+        event.preventDefault();
+        finish();
+      }
+    }
+
+    function handleMotionChange() {
+      if (motion.matches) finish();
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("click", handleSkip);
+    motion.addEventListener("change", handleMotionChange);
+    if (motion.matches || window.location.hash === "#input") finish();
+    else timer = setTimeout(typeNext, 300);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("click", handleSkip);
+      motion.removeEventListener("change", handleMotionChange);
+    };
+  }, [print, system]);
+
+  // Focus only once the interactive prompt has been committed.
+  useEffect(() => {
+    if (booted && ready) inputRef.current?.focus({ preventScroll: true });
+  }, [booted, ready]);
 
   /* --------------------------------------------------------------- handlers */
 
@@ -111,12 +186,15 @@ export default function Shell({ writeups }: ShellProps) {
         {scrollback.map((e) => (<React.Fragment key={e.id}>{e.node}</React.Fragment>))}
       </div>
 
-      <Prompt
+      {ready ? <Prompt
         inputRef={inputRef}
         history={history}
         onSubmit={handleSubmit}
         onClear={() => print([], true)}
-      />
+      /> : <div className="prompt" aria-hidden="true">
+        <PS1 />
+        <span>{startupText}<span className="startup-cursor" /></span>
+      </div>}
     </main>
   );
 }
