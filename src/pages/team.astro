@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { META } from "../data/site";
+import { MEMBERS } from "../data/members";
+---
+
+<Layout title={`Team - ${META.title}`} description="The L3ak roster.">
+  <article class="doc">
+    <a class="back" href="/">../</a>
+
+    <h1>team/</h1>
+    <p class="doc-meta">total {MEMBERS.length}</p>
+
+    <ul class="doc-list">
+      {
+        MEMBERS.map((m) => (
+          <li>
+            <span class="doc-name">{m.handle}</span>
+            <span class="doc-meta">{m.role}</span>
+            <p class="doc-bio">{m.bio}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Layout>

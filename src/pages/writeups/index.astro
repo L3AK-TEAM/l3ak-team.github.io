@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { META } from "../../data/site";
+import { listWriteups } from "../../lib/writeups";
+
+const writeups = await listWriteups();
+---
+
+<Layout title={`Writeups - ${META.title}`} description="Writeups by L3ak.">
+  <article class="doc">
+    <a class="back" href="/">../</a>
+
+    <h1>writeups/</h1>
+    <p class="doc-meta">total {writeups.length}</p>
+
+    <ul class="doc-list">
+      {
+        writeups.map((w) => (
+          <li>
+            <a href={w.url}>{w.title}</a>
+            <span class="doc-meta">
+              {w.event} / {w.chal} / {w.cat} / {w.date}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Layout>
