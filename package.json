@@ -13,12 +13,16 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
+    "@astrojs/markdown-remark": "^7.2.3",
     "@astrojs/react": "^6.0.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "astro": "^7.2.3",
+    "katex": "^0.16.47",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "typescript": "^6.0.3"
   }
 }

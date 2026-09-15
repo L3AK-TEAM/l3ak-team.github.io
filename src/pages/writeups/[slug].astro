@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { META } from "../../data/site";
+import "katex/dist/katex.min.css";
 
 export async function getStaticPaths() {
   const writeups = await getCollection("writeups");

@@ -549,6 +549,12 @@ a {
   margin-top: 0
 }
 
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25em 0
+}
+
 .prose h2 {
   color: var(--fg);
   font-size: 14px;
