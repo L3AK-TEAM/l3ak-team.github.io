@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type RefObject } from "react";
+import { useState, type RefObject } from "react";
 import { PS1 } from "./PS1";
 
 interface Props {
@@ -18,20 +18,6 @@ export function Prompt({ inputRef, history, onSubmit, onClear }: Props) {
   // It cannot dangle: history only ever grows, and submitting resets this.
   const [index, setIndex] = useState<number | null>(null);
   const value = index === null ? draft : (history[index] ?? "");
-
-  const caretRef = useRef<HTMLSpanElement>(null);
-  const mirrorRef = useRef<HTMLSpanElement>(null);
-
-  // The mirror holds the same text with the same font, so its width is where
-  // the caret belongs.
-  useLayoutEffect(() => {
-    const caret = caretRef.current;
-    const mirror = mirrorRef.current;
-    const input = inputRef.current;
-    if (!caret || !mirror || !input) return;
-    const w = Math.min(mirror.offsetWidth, input.clientWidth - 2);
-    caret.style.transform = `translateX(${Math.max(0, w)}px)`;
-  }, [value, inputRef]);
 
   /** Walks the history: -1 toward older entries, +1 toward newer. */
   function recall(delta: -1 | 1) {
@@ -91,10 +77,6 @@ export function Prompt({ inputRef, history, onSubmit, onClear }: Props) {
           spellCheck={false}
           enterKeyHint="go"
         />
-        <span className="caret" ref={caretRef} aria-hidden="true" />
-        <span id="mirror" ref={mirrorRef} aria-hidden="true">
-          {value}
-        </span>
       </label>
     </div>
   );

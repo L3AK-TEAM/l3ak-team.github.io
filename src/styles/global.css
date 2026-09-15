@@ -292,59 +292,15 @@ a {
   padding: 0;
   margin: 0;
   outline: none;
-  caret-color: transparent;
+  caret-color: var(--bright-blue);
 }
 
 #input::placeholder {
   color: var(--dim)
 }
 
-.caret {
-  position: absolute;
-  top: .18em;
-  left: 0;
-  width: 1px;
-  height: 1.15em;
-  background: var(--bright-blue);
-  pointer-events: none;
-}
-
-.field:focus-within .caret {
-  animation: blink 1.06s steps(1, end) infinite
-}
-
-.field:not(:focus-within) .caret {
-  opacity: 0;
-  animation: none
-}
-
-@keyframes blink {
-
-  0%,
-  50% {
-    opacity: 1
-  }
-
-  50.01%,
-  100% {
-    opacity: 0
-  }
-}
-
-#mirror {
-  position: absolute;
-  visibility: hidden;
-  white-space: pre;
-  left: 0;
-  top: 0
-}
-
 @media (prefers-reduced-motion:reduce) {
   .reveal {
-    animation: none
-  }
-
-  .field:focus-within .caret {
     animation: none
   }
 
