@@ -1,10 +1,14 @@
 ---
 const SHORTCUTS = [
-  { href: "/writeups/", label: "writeups" },
+  { href: "/", label: "home" },
   { href: "/team/", label: "team" },
+  { href: "/writeups/", label: "writeups" },
 ] as const;
 
 const here = Astro.url.pathname;
+// "/" prefixes every path, so home only counts as current on an exact match.
+const isCurrent = (href: string) =>
+  href === "/" ? here === "/" : here.startsWith(href);
 ---
 
 <header class="bar">
@@ -18,7 +22,7 @@ const here = Astro.url.pathname;
         <a
           class="cmdbtn"
           href={s.href}
-          aria-current={here.startsWith(s.href) ? "page" : undefined}
+          aria-current={isCurrent(s.href) ? "page" : undefined}
         >
           {s.label}
         </a>
