@@ -1,5 +1,5 @@
 import type { Writeup } from "../../lib/writeups";
-import { MEMBERS } from "../../data/members";
+import { MEMBERS, roleLabel } from "../../data/members";
 
 const MONTHS = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" ");
 
@@ -34,7 +34,7 @@ export function Roster() {
       {MEMBERS.map((m) => (
         <span className="who" key={m.handle}>
           <span className="h">{m.handle}</span>
-          <span className="r">{m.role}</span>
+          <span className="r">{roleLabel(m)}</span>
         </span>
       ))}
     </div>

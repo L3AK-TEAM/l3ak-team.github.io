@@ -1,26 +1,189 @@
 ---
+// `getent group` — the roster as a dense list, grouped by rank.
+import { Image } from "astro:assets";
+import { PS1 } from "../components/shell/PS1";
 import Layout from "../layouts/Layout.astro";
 import { META } from "../data/site";
-import { MEMBERS } from "../data/members";
+import { MEMBERS, RANKS, memberLinks } from "../data/members";
+
+const groups = RANKS.map((rank) => ({
+  rank,
+  members: MEMBERS.filter((m) => m.rank === rank),
+})).filter((g) => g.members.length > 0);
 ---
 
 <Layout title={`Team - ${META.title}`} description="The L3ak roster.">
   <article class="doc">
-    <a class="back" href="/">../</a>
+    <header class="cmd">
+      <h1>
+        <span class="ps" aria-hidden="true"><PS1 /></span>{" "}cd <span class="cwd">team</span>
+      </h1>
+      <p class="sub">// {MEMBERS.length} members</p>
+    </header>
 
-    <h1>team/</h1>
-    <p class="doc-meta">total {MEMBERS.length}</p>
-
-    <ul class="doc-list">
-      {
-        MEMBERS.map((m) => (
-          <li>
-            <span class="doc-name">{m.handle}</span>
-            <span class="doc-meta">{m.role}</span>
-            <p class="doc-bio">{m.bio}</p>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      groups.map((g) => (
+        <section class="group" aria-labelledby={`g-${g.rank}`}>
+          <h2 id={`g-${g.rank}`}>
+            <span class="hash">#</span> {g.rank}
+            <span class="count">({g.members.length})</span>
+          </h2>
+          <ul class="members">
+            {g.members.map((m) => (
+              <li class="member">
+                <Image
+                  class="pfp"
+                  src={m.pfp}
+                  alt=""
+                  width={56}
+                  height={56}
+                  densities={[1, 2]}
+                />
+                <div class="body">
+                  <div class="head">
+                    <span class="handle">{m.handle}</span>
+                    <span class="focus">{m.focus.join(" ")}</span>
+                  </div>
+                  <p class="bio">{m.bio}</p>
+                  {memberLinks(m).length > 0 && (
+                    <ul class="links" aria-label={`${m.handle} elsewhere`}>
+                      {memberLinks(m).map((l) => (
+                        <li>
+                          <a href={l.href} rel="me noopener">
+                            {l.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
   </article>
 </Layout>
+
+<style>
+  .cmd h1 {
+    font-size: inherit;
+    font-weight: 400;
+    margin: 0 0 6px;
+  }
+
+  .cwd {
+    color: var(--accent);
+  }
+
+  .sub {
+    color: var(--dim);
+    font-size: 13px;
+    margin: 0;
+  }
+
+  .group {
+    margin-top: 34px;
+  }
+
+  h2 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+
+  .hash,
+  .count {
+    color: var(--dim);
+  }
+
+  .members {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 20px;
+  }
+
+  .member {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  .pfp {
+    display: block;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--r);
+    border: 1px solid var(--line-strong);
+    object-fit: cover;
+    filter: grayscale(1);
+    transition: filter 0.3s var(--ease);
+  }
+
+  .member:hover .pfp {
+    filter: none;
+  }
+
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 12px;
+    align-items: baseline;
+  }
+
+  .handle {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .focus {
+    color: var(--dim);
+    font-size: 12px;
+  }
+
+  .bio {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 2px 0 0;
+    max-width: 68ch;
+  }
+
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    font-size: 12px;
+  }
+
+  .links a {
+    color: var(--dim);
+  }
+
+  .links a::before {
+    content: "~/";
+  }
+
+  .links a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .member {
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .pfp {
+      width: 44px;
+      height: 44px;
+    }
+  }
+</style>
