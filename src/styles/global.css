@@ -467,6 +467,27 @@ a {
   max-width: 68ch
 }
 
+/* Listing pages open on the command that got you there: `$ cd team`. */
+.cmd h1 {
+  font-size: inherit;
+  font-weight: 400;
+  margin: 0 0 6px
+}
+
+.cmd .cwd {
+  color: var(--accent)
+}
+
+.cmd .sub {
+  color: var(--dim);
+  font-size: 13px;
+  margin: 0
+}
+
+.cmd .sub a:hover {
+  color: var(--accent)
+}
+
 .doc-meta {
   color: var(--dim);
   font-size: 13px;

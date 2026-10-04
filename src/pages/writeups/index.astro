@@ -1,4 +1,5 @@
 ---
+import { PS1 } from "../../components/shell/PS1";
 import Layout from "../../layouts/Layout.astro";
 import { META } from "../../data/site";
 import { listWriteups } from "../../lib/writeups";
@@ -8,10 +9,12 @@ const writeups = await listWriteups();
 
 <Layout title={`Writeups - ${META.title}`} description="Writeups by L3ak.">
   <article class="doc">
-    <a class="back" href="/">../</a>
-
-    <h1>writeups/</h1>
-    <p class="doc-meta">total {writeups.length}</p>
+    <header class="cmd">
+      <h1>
+        <span class="ps" aria-hidden="true"><PS1 /></span>{" "}cd <span class="cwd">writeups</span>
+      </h1>
+      <p class="sub">// {writeups.length} writeups</p>
+    </header>
 
     <ul class="doc-list">
       {
