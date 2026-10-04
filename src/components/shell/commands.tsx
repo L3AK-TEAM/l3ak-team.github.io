@@ -8,6 +8,7 @@ const HELP = [
   "  ls writeups/     list published writeups, newest first",
   "  cat <name>       read a writeup summary and open it",
   "  members          the roster",
+  "  cd <page>        go to team/, writeups/, or contests/",
   "  clear            wipe the screen",
 ].join("\n");
 
@@ -17,8 +18,17 @@ export const COMMAND_NAMES = [
   "ls",
   "cat",
   "members",
+  "cd",
   "clear",
 ] as const;
+
+/** Directories `cd` can enter, each one a page of the site. */
+const PAGES: Record<string, string> = {
+  "": "/",
+  team: "/team/",
+  writeups: "/writeups/",
+  contests: "/contests/",
+};
 
 export type Commands = Record<string, (args: string[]) => React.ReactNode[]>;
 
@@ -90,6 +100,22 @@ export function createCommands(writeups: Writeup[]): Commands {
           <a href={w.url}>{w.url}</a>
         </div>,
       ];
+    },
+
+    cd(args) {
+      const target = args[0] ?? "~";
+      // "~", "/", "~/team", "./team/", "/team" all name the same places.
+      const dir = target.replace(/^(~|\.)?\/*/, "").replace(/\/+$/, "").toLowerCase();
+      const href = Object.hasOwn(PAGES, dir) ? PAGES[dir] : undefined;
+      if (!href) {
+        return [
+          <div className="out reveal">
+            cd: {target}:  No such file or directory
+          </div>,
+        ];
+      }
+      if (href !== location.pathname) location.assign(href);
+      return [];
     },
 
     members() {
