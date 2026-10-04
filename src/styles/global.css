@@ -105,6 +105,9 @@ a {
   gap: 16px;
   margin-left: auto;
   align-items: center;
+  /* overflow-x forces overflow-y to clip too, so leave room for the
+     :active nudge or the button's bottom border gets cut off. */
+  padding-block: 2px;
   overflow-x: auto;
   scrollbar-width: none
 }
