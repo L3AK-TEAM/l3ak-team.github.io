@@ -404,6 +404,10 @@ a {
   padding: 34px 20px 40px
 }
 
+.js #fallback {
+  display: none
+}
+
 #fallback h1 {
   font-size: 17px;
   font-weight: 500;

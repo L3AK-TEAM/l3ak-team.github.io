@@ -21,6 +21,9 @@ const { title = META.title, description = META.description } = Astro.props;
     <meta name="color-scheme" content="dark light" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {/* Runs before first paint so the no-JS fallback is hidden right away
+        instead of flashing until the shell hydrates. */}
+    <script is:inline>document.documentElement.classList.add("js")</script>
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={META.ogDescription} />
