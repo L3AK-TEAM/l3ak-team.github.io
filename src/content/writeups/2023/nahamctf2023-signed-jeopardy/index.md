@@ -109,7 +109,9 @@ After careful inspection of the code in `server.sage`, one can observe that the 
 
 In the ECDSA, a random nonce value `k` is generated for each signature creation. The nonce value is used in conjunction with the private key to compute a point on the elliptic curve, which is in turn transformed into a valid signature. Since the purpose of the nonce is to provide randomness (uniqueness) to the signature generation process, it is of vital importance that `k` remains secret and is never reused. If it is reused, the attacker can directly compute `k` and the private key `d` and then forge signatures for arbitrary messages. As explained [here](https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm), if we have two messages `m1` and `m2` and their signatures `(r,s1)` and `(r,s2)`, we can compute the message hashes `z1` and `z2` and compute `k` and `d` by:
 
-![eqn](eqn.png)
+$$
+k = \frac{z_1 - z_2}{s_1 - s_2} \qquad d = \frac{s_1 k - z_1}{r}
+$$
 
 Thus, if we can select two questions from the server to answer - making sure to record the answer signatures - we can recompute `k` and `d` using the equations above. Then, we can choose an example message (such as “hello”) and compute its signature using the recovered values. Since we generate the signature using the same `k` and `d` used by the server, our signature should match the one computed by the server and we should be able to retrieve the flag!
 
