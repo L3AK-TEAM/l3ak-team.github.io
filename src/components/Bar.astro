@@ -1,5 +1,7 @@
 ---
-const SHORTCUTS = [
+/* A tmux status line: the session name, one window per page, and the
+   host/clock on the right — the same places `cd` can take you. */
+const WINDOWS = [
   { href: "/", label: "home" },
   { href: "/team/", label: "team" },
   { href: "/writeups/", label: "writeups" },
@@ -12,22 +14,43 @@ const isCurrent = (href: string) =>
   href === "/" ? here === "/" : here.startsWith(href);
 ---
 
-<header class="bar">
-  <a class="brand" href="/">
-    {/* Reserve height via intrinsic size */}
-    <img src="/l3ak-logo.png" alt="L3ak" width="423" height="219" />
-  </a>
-  <nav aria-label="Shortcuts">
+<footer class="bar">
+  <span class="session" aria-hidden="true">[l3ak]</span>
+  <nav aria-label="Pages">
     {
-      SHORTCUTS.map((s) => (
-        <a
-          class="cmdbtn"
-          href={s.href}
-          aria-current={isCurrent(s.href) ? "page" : undefined}
-        >
-          {s.label}
-        </a>
-      ))
+      WINDOWS.map((w, i) => {
+        const current = isCurrent(w.href);
+        return (
+          <a
+            class="win"
+            href={w.href}
+            aria-current={current ? "page" : undefined}
+          >
+            <span aria-hidden="true">{i}:</span>
+            {w.label}
+            <span aria-hidden="true">{current ? "*" : ""}</span>
+          </a>
+        );
+      })
     }
   </nav>
-</header>
+  <span class="status" aria-hidden="true">
+    "l3ak.team" <span id="clock"></span>
+  </span>
+</footer>
+
+{/* tmux's default status-right: %H:%M %d-%b-%y. Rendered client side so the
+    static build doesn't freeze the time it was built at. */}
+<script is:inline>
+  (() => {
+    const clock = document.getElementById("clock");
+    const pad = (n) => String(n).padStart(2, "0");
+    const tick = () => {
+      const d = new Date();
+      const mon = d.toLocaleString("en", { month: "short" });
+      clock.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())} ${pad(d.getDate())}-${mon}-${pad(d.getFullYear() % 100)}`;
+    };
+    tick();
+    setInterval(tick, 10000);
+  })();
+</script>
