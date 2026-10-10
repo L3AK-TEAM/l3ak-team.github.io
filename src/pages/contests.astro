@@ -1,7 +1,8 @@
 ---
-// CTFTime results: one dense list per year, grouped like /team.
-import { PS1 } from "../components/shell/PS1";
+// `man 7 l3ak-contests` — CTFTime results as a manual page: a tbl(1)-style
+// summary, then one section per season.
 import Layout from "../layouts/Layout.astro";
+import ManPage from "../components/ManPage.astro";
 import { META } from "../data/site";
 import {
   ALL_RESULTS,
@@ -15,30 +16,36 @@ import {
 } from "../data/contests";
 
 const COLS = [
-  ["first", "1st", true],
-  ["second", "2nd", true],
-  ["third", "3rd", true],
-  ["top10", "top10", false],
-  ["played", "ctfs", false],
+  ["first", "1st"],
+  ["second", "2nd"],
+  ["third", "3rd"],
+  ["top10", "top10"],
+  ["played", "ctfs"],
 ] as const;
 ---
 
 <Layout title={`Contests - ${META.title}`} description="L3ak's CTF results, from CTFTime.">
-  <article class="doc">
-    <header class="cmd">
-      <h1>
-        <span class="ps" aria-hidden="true"><PS1 /></span>{" "}cd <span class="cwd">contests</span>
-      </h1>
-      <p class="sub">
-        // {ALL_RESULTS.length} results via <a href={TEAM_URL}>ctftime</a>, as of {FETCHED}
-      </p>
-    </header>
+  <ManPage name="l3ak-contests" section={7} manual="L3ak Team Manual">
+    <section>
+      <h2>NAME</h2>
+      <p>l3ak-contests - how L3ak has placed in CTFs</p>
+    </section>
 
-    <section class="group" aria-labelledby="stats">
-      <h2 id="stats">
-        <span class="hash">#</span> stats
-        <span class="season">best rank {BEST_RANK}</span>
-      </h2>
+    <section>
+      <h2>DESCRIPTION</h2>
+      <p>
+        {ALL_RESULTS.length} results over {SEASONS.length} seasons, taken from the team's{" "}
+        <a href={TEAM_URL}>CTFtime</a> page on {FETCHED}. The best overall rank L3ak has held
+        in a season is <b>{BEST_RANK}</b>.
+      </p>
+      <p>
+        Each season lists its events newest first: the place, the event, and the <i>rating</i>{" "}
+        points the result earned. Podium finishes are shown in bold.
+      </p>
+    </section>
+
+    <section>
+      <h2>SUMMARY</h2>
       <table class="stats">
         <thead>
           <tr>
@@ -57,9 +64,7 @@ const COLS = [
                     <a href={`#y-${s.year}`}>{s.year}</a>
                   </th>
                   <td>{s.rank ?? "-"}</td>
-                  {COLS.map(([key, , podium]) => (
-                    <td class:list={{ podium: podium && t[key] > 0 }}>{t[key]}</td>
-                  ))}
+                  {COLS.map(([key]) => <td>{t[key]}</td>)}
                 </tr>
               );
             })
@@ -68,10 +73,8 @@ const COLS = [
         <tfoot>
           <tr>
             <th scope="row">total</th>
-            <td></td>
-            {COLS.map(([key, , podium]) => (
-              <td class:list={{ podium }}>{TOTAL[key]}</td>
-            ))}
+            <td>{BEST_RANK}</td>
+            {COLS.map(([key]) => <td>{TOTAL[key]}</td>)}
           </tr>
         </tfoot>
       </table>
@@ -79,23 +82,18 @@ const COLS = [
 
     {
       SEASONS.map((s) => (
-        <section class="group" aria-labelledby={`y-${s.year}`}>
-          <h2 id={`y-${s.year}`}>
-            <span class="hash">#</span> {s.year}
-            <span class="count">({s.results.length})</span>
-            {s.rank && (
-              <span class="season">
-                rank {s.rank} · {s.points?.toFixed(3)} pts
-              </span>
-            )}
-          </h2>
+        <section aria-labelledby={`y-${s.year}`}>
+          <h2 id={`y-${s.year}`}>SEASON {s.year}</h2>
+          {s.rank && (
+            <p>
+              Ranked <b>{s.rank}</b> overall with {s.points?.toFixed(3)} points.
+            </p>
+          )}
           <ol class="results">
             {s.results.map((r) => (
-              <li class:list={["result", { podium: r.place <= 3 }]}>
+              <li class:list={{ podium: r.place <= 3 }}>
                 <span class="place">{r.place}</span>
-                <a class="event" href={eventUrl(r.eventId)}>
-                  {r.name}
-                </a>
+                <a href={eventUrl(r.eventId)}>{r.name}</a>
                 <span class="rating">{r.rating.toFixed(3)}</span>
               </li>
             ))}
@@ -103,35 +101,19 @@ const COLS = [
         </section>
       ))
     }
-  </article>
+
+    <section>
+      <h2>SEE ALSO</h2>
+      <p>
+        <a href="/team/">l3ak-team</a>(7), <a href="/writeups/">l3ak-writeups</a>(7)
+      </p>
+    </section>
+  </ManPage>
 </Layout>
 
 <style>
-  .group {
-    margin-top: 34px;
-  }
-
-  h2 {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 8px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    margin: 0 0 10px;
-  }
-
-  .hash,
-  .count {
-    color: var(--dim);
-  }
-
-  .season {
-    margin-left: auto;
-    color: var(--dim);
-    font-weight: 400;
-  }
-
+  /* Laid out the way tbl(1) would: right-aligned numbers, three cells
+     apart, with the header and total in bold. */
   .stats {
     border-collapse: collapse;
     font-variant-numeric: tabular-nums;
@@ -139,7 +121,7 @@ const COLS = [
 
   .stats th,
   .stats td {
-    padding: 3px 0 3px 3ch;
+    padding: 0 0 0 3ch;
     text-align: right;
     font-weight: 400;
   }
@@ -149,73 +131,57 @@ const COLS = [
     text-align: left;
   }
 
-  .stats thead th {
-    color: var(--dim);
-    font-size: 12px;
-  }
-
-  .stats tbody th a {
-    color: var(--muted);
-  }
-
-  .stats tbody th a:hover {
-    color: var(--accent);
-  }
-
-  .stats td {
+  .stats :is(thead, tfoot) :is(th, td) {
+    font-weight: 700;
     color: var(--fg);
   }
 
   .stats tfoot :is(th, td) {
-    border-top: 1px solid var(--line-strong);
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  .stats :is(tbody, tfoot) td.podium {
-    color: var(--accent);
+    padding-top: 1lh;
   }
 
   .results {
     list-style: none;
     padding: 0;
-    margin: 0;
   }
 
-  .result {
+  /* ManPage zeroes the margins under a heading; the season line keeps a
+     blank row between it and the list. */
+  p + .results {
+    margin-top: 1lh;
+  }
+
+  /* Place, event, rating: one row per result, columns kept by the grid. */
+  .results li {
     display: grid;
-    grid-template-columns: 4ch minmax(0, 1fr) auto;
-    gap: 16px;
-    align-items: baseline;
-    padding: 3px 0;
+    grid-template-columns: 3ch minmax(0, 1fr) max-content;
+    column-gap: 2ch;
+    max-width: 72ch;
   }
 
-  .place {
-    color: var(--dim);
+  .place,
+  .rating {
     text-align: right;
+    font-variant-numeric: tabular-nums;
   }
 
-  .place::before {
-    content: "#";
-  }
-
-  .podium .place {
-    color: var(--accent);
-  }
-
-  .event {
-    color: var(--fg);
+  .results a {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-decoration: none;
   }
 
-  .event:hover {
-    color: var(--accent);
+  .results a:hover {
+    text-decoration: underline;
   }
 
-  .rating {
-    color: var(--dim);
-    font-size: 12px;
+  .podium :is(.place, a) {
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .results li:not(.podium) a {
+    color: var(--muted);
   }
 </style>
