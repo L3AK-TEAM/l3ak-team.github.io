@@ -1,0 +1,93 @@
+---
+// A page shown the way a pager shows it in a terminal: the command that
+// opened it, the content, and less's prompt pinned to the last row.
+import { PS1 } from "./shell/PS1";
+
+interface Props {
+  /** What was typed at the prompt, e.g. `man 7 l3ak-team`. */
+  command: string;
+  /** less's prompt: man's "Manual page x(7)", or a file name. */
+  prompt: string;
+  /** man sets its own prompt style; anything else gets less -M's. */
+  style?: "man" | "file";
+  /** Where `q` goes: back to whatever listed this page. */
+  quitTo?: string;
+}
+
+const { command, prompt, style = "file", quitTo = "/" } = Astro.props;
+const initial =
+  style === "man" ? `${prompt} line 1 (press h for help or q to quit)` : `${prompt} lines 1`;
+---
+
+<main class="term pager">
+  <p class="invocation">
+    <span aria-hidden="true"><PS1 /></span> {command}
+  </p>
+  <slot />
+  <p class="less" aria-hidden="true" data-prompt={prompt} data-style={style} data-quit={quitTo}>
+    {initial}
+  </p>
+</main>
+
+{/* less's keys, for the few that mean something here. The prompt tracks the
+    lines on screen, like the real one. */}
+<script is:inline>
+  (() => {
+    const status = document.querySelector(".less");
+    const { prompt, style, quit } = status.dataset;
+    const lh = () => parseFloat(getComputedStyle(document.body).lineHeight);
+    const update = () => {
+      const root = document.documentElement;
+      const first = Math.floor(scrollY / lh()) + 1;
+      const last = Math.floor((scrollY + innerHeight) / lh());
+      const total = Math.ceil(root.scrollHeight / lh());
+      const end = innerHeight + scrollY >= root.scrollHeight - 2;
+      status.textContent =
+        style === "man"
+          ? `${prompt} line ${first}${end ? " (END) (press q to quit)" : " (press h for help or q to quit)"}`
+          : `${prompt} lines ${first}-${Math.min(last, total)}/${total} ${end ? "(END)" : Math.round((100 * last) / total) + "%"}`;
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    update();
+
+    addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.target.closest("input, textarea")) return;
+      const step = { j: 1, k: -1, d: innerHeight / 2 / lh(), u: -innerHeight / 2 / lh() }[e.key];
+      if (step) scrollBy(0, step * lh());
+      else if (e.key === "g") scrollTo(0, 0);
+      else if (e.key === "G") scrollTo(0, document.documentElement.scrollHeight);
+      else if (e.key === "q") location.assign(quit);
+    });
+  })();
+</script>
+
+<style>
+  /* less owns the last row: no padding under it, or the prompt comes
+     unstuck from the tmux bar once the page is scrolled to the end. */
+  .term.pager {
+    padding-bottom: 0;
+  }
+
+  .invocation {
+    margin: 0;
+  }
+
+  /* less's prompt is drawn in standout (reverse video) on the last row,
+     from column 0: it bleeds through .term's gutter to the window edge, and
+     the gutter comes back as padding so the text stays on the page's grid. */
+  .less {
+    position: sticky;
+    bottom: var(--bar);
+    margin: 1lh 0 0 calc(-1 * var(--gutter));
+    padding: 0 1ch 0 var(--gutter);
+    box-sizing: border-box;
+    width: max-content;
+    max-width: calc(100% + var(--gutter));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: var(--fg);
+    color: var(--bg);
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Pager from "../../components/Pager.astro";
+import { META } from "../../data/site";
+import "katex/dist/katex.min.css";
+
+export async function getStaticPaths() {
+  const writeups = await getCollection("writeups");
+  return writeups.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<"writeups">;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const w = entry.data;
+const file = `${entry.id}.md`;
+
+// The file's own front matter, shown as the raw YAML it is. The fields
+// are in schema order; a renderer would print it before the body.
+const frontmatter = [
+  "---",
+  `author: ${w.author}`,
+  `cat: ${w.cat}`,
+  `date: ${w.date.toISOString().slice(0, 10)}`,
+  `title: ${w.title}`,
+  `event: ${w.event}`,
+  `chal: ${w.chal}`,
+  `blurb: ${w.blurb}`,
+  "---",
+].join("\n");
+---
+
+<Layout title={`${w.title} - ${META.title}`} description={w.blurb}>
+  <Pager command={`mdcat -p ${file}`} prompt={file} quitTo="/writeups/">
+    <article class="md">
+      <pre class="frontmatter">{frontmatter}</pre>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </Pager>
+</Layout>

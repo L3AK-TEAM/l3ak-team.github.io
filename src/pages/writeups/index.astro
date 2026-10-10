@@ -1,0 +1,83 @@
+---
+// `man 7 l3ak-writeups` — the index as a manual page, each writeup a tagged
+// paragraph the way man(7) lays out .TP: the title, then the rest indented.
+import Layout from "../../layouts/Layout.astro";
+import ManPage from "../../components/ManPage.astro";
+import { META } from "../../data/site";
+import { listWriteups } from "../../lib/writeups";
+
+const writeups = await listWriteups();
+---
+
+<Layout title={`Writeups - ${META.title}`} description="Writeups by L3ak.">
+  <ManPage name="l3ak-writeups" section={7} manual="L3ak Team Manual">
+    <section>
+      <h2>NAME</h2>
+      <p>l3ak-writeups - how L3ak solved the challenges it wrote up</p>
+    </section>
+
+    <section>
+      <h2>DESCRIPTION</h2>
+      <p>
+        {writeups.length} writeups, newest first. Each opens in the pager as its Markdown source;
+        press <b>q</b> there to come back to this page.
+      </p>
+    </section>
+
+    <section>
+      <h2>WRITEUPS</h2>
+      <dl class="writeups">
+        {
+          writeups.map((w) => (
+            <>
+              <dt>
+                <a href={w.url}>{w.title}</a>
+              </dt>
+              <dd>
+                <p>{w.blurb}</p>
+                <p>
+                  <i>{w.event}</i> / <i>{w.chal}</i> ({w.cat}), by {w.author}, {w.date}.
+                </p>
+              </dd>
+            </>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section>
+      <h2>SEE ALSO</h2>
+      <p>
+        <a href="/team/">l3ak-team</a>(7), <a href="/contests/">l3ak-contests</a>(7),{" "}
+        <a href="https://github.com/swsnr/mdcat">mdcat</a>(1)
+      </p>
+    </section>
+  </ManPage>
+</Layout>
+
+<style>
+  dt + dd + dt {
+    margin-top: 1lh;
+  }
+
+  dt a {
+    font-weight: 700;
+  }
+
+  /* .TP's default indent: seven more cells under the tag. */
+  dd {
+    margin: 0 0 0 7ch;
+  }
+
+  /* Blurb and byline sit on consecutive lines, not a paragraph apart. */
+  dd p,
+  dd p + p {
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    dd {
+      margin-left: 3ch;
+    }
+  }
+</style>
