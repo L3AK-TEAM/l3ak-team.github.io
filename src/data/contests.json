@@ -1,0 +1,783 @@
+{
+  "teamId": 220336,
+  "fetched": "2026-10-04",
+  "years": [
+    {
+      "year": 2026,
+      "rank": 52,
+      "points": 484.601,
+      "results": [
+        {
+          "place": 6,
+          "name": "AEROSPACE VILLAGE STARPWN CTF",
+          "eventId": 3342,
+          "rating": 23.643
+        },
+        {
+          "place": 21,
+          "name": "R3CTF 2026",
+          "eventId": 3149,
+          "rating": 6.046
+        },
+        {
+          "place": 25,
+          "name": "CITEFLAG QUALS 2026",
+          "eventId": 3175,
+          "rating": 10.498
+        },
+        {
+          "place": 2,
+          "name": "RITSEC CTF 2026",
+          "eventId": 3096,
+          "rating": 72.96
+        },
+        {
+          "place": 3,
+          "name": "TAMUctf 2026",
+          "eventId": 3095,
+          "rating": 101.627
+        },
+        {
+          "place": 36,
+          "name": "DiceCTF 2026 Quals",
+          "eventId": 3110,
+          "rating": 72.987
+        },
+        {
+          "place": 1,
+          "name": "Srdnlen CTF 2026 Quals",
+          "eventId": 3043,
+          "rating": 69.52
+        },
+        {
+          "place": 1,
+          "name": "0xL4ugh CTF v5",
+          "eventId": 3024,
+          "rating": 58.38
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "rank": 13,
+      "points": 892.653,
+      "results": [
+        {
+          "place": 5,
+          "name": "0CTF 2025",
+          "eventId": 2997,
+          "rating": 69.197
+        },
+        {
+          "place": 6,
+          "name": "BackdoorCTF 2025",
+          "eventId": 2915,
+          "rating": 64.431
+        },
+        {
+          "place": 1,
+          "name": "PatriotCTF 2025",
+          "eventId": 2850,
+          "rating": 84.84
+        },
+        {
+          "place": 4,
+          "name": "PwnSec CTF 2025",
+          "eventId": 2906,
+          "rating": 26.639
+        },
+        {
+          "place": 2,
+          "name": "BuckeyeCTF 2025",
+          "eventId": 2883,
+          "rating": 73.026
+        },
+        {
+          "place": 8,
+          "name": "Hack.lu CTF 2025",
+          "eventId": 2842,
+          "rating": 70.618
+        },
+        {
+          "place": 1,
+          "name": "COMPFEST CTF 2025",
+          "eventId": 2900,
+          "rating": 128
+        },
+        {
+          "place": 3,
+          "name": "SunshineCTF 2025",
+          "eventId": 2863,
+          "rating": 68.867
+        },
+        {
+          "place": 8,
+          "name": "Srdnlen CTF 2025 Finals (Sardinia Cyber Camp)",
+          "eventId": 2840,
+          "rating": 10.827
+        },
+        {
+          "place": 4,
+          "name": "CrewCTF 2025",
+          "eventId": 2704,
+          "rating": 39.394
+        },
+        {
+          "place": 1,
+          "name": "ImaginaryCTF 2025",
+          "eventId": 2799,
+          "rating": 132.04
+        },
+        {
+          "place": 5,
+          "name": "TFC CTF 2025",
+          "eventId": 2822,
+          "rating": 52.956
+        },
+        {
+          "place": 4,
+          "name": "idekCTF 2025",
+          "eventId": 2746,
+          "rating": 46.958
+        },
+        {
+          "place": 9,
+          "name": "DownUnderCTF 2025",
+          "eventId": 2669,
+          "rating": 73.457
+        },
+        {
+          "place": 7,
+          "name": "bi0sCTF 2025",
+          "eventId": 2672,
+          "rating": 54.945
+        },
+        {
+          "place": 3,
+          "name": "NahamCon CTF 2025",
+          "eventId": 2782,
+          "rating": 69.999
+        },
+        {
+          "place": 3,
+          "name": "DamCTF 2025",
+          "eventId": 2585,
+          "rating": 80.893
+        },
+        {
+          "place": 5,
+          "name": "UMDCTF 2025",
+          "eventId": 2563,
+          "rating": 76.558
+        },
+        {
+          "place": 1,
+          "name": "UMassCTF 2025",
+          "eventId": 2653,
+          "rating": 96.76
+        },
+        {
+          "place": 3,
+          "name": "TAMUctf 2025",
+          "eventId": 2681,
+          "rating": 72.401
+        },
+        {
+          "place": 1,
+          "name": "RITSEC CTF 2025",
+          "eventId": 2673,
+          "rating": 68.28
+        },
+        {
+          "place": 5,
+          "name": "Cyber Apocalypse CTF 2025: Tales from Eldoria",
+          "eventId": 2674,
+          "rating": 28.8
+        },
+        {
+          "place": 9,
+          "name": "UTCTF 2025",
+          "eventId": 2641,
+          "rating": 74.678
+        },
+        {
+          "place": 7,
+          "name": "TRX CTF 2025",
+          "eventId": 2654,
+          "rating": 18.313
+        },
+        {
+          "place": 2,
+          "name": "BroncoCTF 2025",
+          "eventId": 2657,
+          "rating": 33.765
+        },
+        {
+          "place": 5,
+          "name": "LA CTF 2025",
+          "eventId": 2592,
+          "rating": 33.991
+        },
+        {
+          "place": 1,
+          "name": "BearcatCTF 2025: World Tour",
+          "eventId": 2596,
+          "rating": 47.78
+        },
+        {
+          "place": 3,
+          "name": "Nullcon Goa HackIM 2025 CTF",
+          "eventId": 2642,
+          "rating": 40
+        },
+        {
+          "place": 7,
+          "name": "x3CTF 2025 (feat. mvm)",
+          "eventId": 2467,
+          "rating": 20.377
+        },
+        {
+          "place": 3,
+          "name": "Srdnlen CTF 2025 Quals",
+          "eventId": 2576,
+          "rating": 39.685
+        },
+        {
+          "place": 9,
+          "name": "UofTCTF 2025",
+          "eventId": 2570,
+          "rating": 17.24
+        },
+        {
+          "place": 7,
+          "name": "IrisCTF 2025",
+          "eventId": 2503,
+          "rating": 29.672
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "rank": 21,
+      "points": 643.005,
+      "results": [
+        {
+          "place": 61,
+          "name": "hxp 38C3 CTF",
+          "eventId": 2437,
+          "rating": 2.318
+        },
+        {
+          "place": 5,
+          "name": "BackdoorCTF 2024",
+          "eventId": 2540,
+          "rating": 39.815
+        },
+        {
+          "place": 49,
+          "name": "TSG CTF 2024",
+          "eventId": 2424,
+          "rating": 3.874
+        },
+        {
+          "place": 36,
+          "name": "LakeCTF Quals 24-25",
+          "eventId": 2502,
+          "rating": 11.613
+        },
+        {
+          "place": 3,
+          "name": "World Wide CTF 2024",
+          "eventId": 2572,
+          "rating": 31.247
+        },
+        {
+          "place": 12,
+          "name": "GlacierCTF 2024",
+          "eventId": 2402,
+          "rating": 15.922
+        },
+        {
+          "place": 6,
+          "name": "BlockCTF 2024 (Formerly SquareCTF)",
+          "eventId": 2517,
+          "rating": 55.463
+        },
+        {
+          "place": 29,
+          "name": "BlueHens CTF 2024",
+          "eventId": 2512,
+          "rating": 9.318
+        },
+        {
+          "place": 24,
+          "name": "ISITDTU CTF 2024 Quals",
+          "eventId": 2456,
+          "rating": 19.923
+        },
+        {
+          "place": 457,
+          "name": "Questcon CTF",
+          "eventId": 2505,
+          "rating": 0.235
+        },
+        {
+          "place": 1,
+          "name": "SunshineCTF 2024",
+          "eventId": 2485,
+          "rating": 77.14
+        },
+        {
+          "place": 154,
+          "name": "CTF MetaRed Mexico Anuies-TIC 2024",
+          "eventId": 2482,
+          "rating": 0
+        },
+        {
+          "place": 2,
+          "name": "TCP1P CTF 2024: Exploring Nusantara's Digital Realm",
+          "eventId": 2256,
+          "rating": 36.06
+        },
+        {
+          "place": 4,
+          "name": "BuckeyeCTF 2024",
+          "eventId": 2449,
+          "rating": 54.223
+        },
+        {
+          "place": 2,
+          "name": "PatriotCTF 2024",
+          "eventId": 2426,
+          "rating": 46.076
+        },
+        {
+          "place": 64,
+          "name": "m0leCon CTF 2025 Teaser",
+          "eventId": 2440,
+          "rating": 3.043
+        },
+        {
+          "place": 1,
+          "name": "COMPFEST CTF 2024",
+          "eventId": 2463,
+          "rating": 86
+        },
+        {
+          "place": 30,
+          "name": "BlackHat MEA CTF Qualification 2024",
+          "eventId": 2430,
+          "rating": 18.904
+        },
+        {
+          "place": 1,
+          "name": "Lexington Informatics Tournament CTF 2024",
+          "eventId": 2444,
+          "rating": 92.5
+        },
+        {
+          "place": 5,
+          "name": "CrewCTF 2024",
+          "eventId": 2223,
+          "rating": 24.569
+        },
+        {
+          "place": 1,
+          "name": "DeadSec CTF 2024",
+          "eventId": 2353,
+          "rating": 47.92
+        },
+        {
+          "place": 3,
+          "name": "ImaginaryCTF 2024",
+          "eventId": 2396,
+          "rating": 61.508
+        },
+        {
+          "place": 9,
+          "name": "DownUnderCTF 2024",
+          "eventId": 2284,
+          "rating": 51.812
+        },
+        {
+          "place": 7,
+          "name": "UIUCTF 2024",
+          "eventId": 2275,
+          "rating": 64.919
+        },
+        {
+          "place": 52,
+          "name": "Google Capture The Flag 2024",
+          "eventId": 2296,
+          "rating": 13.422
+        },
+        {
+          "place": 6,
+          "name": "vsCTF 2024",
+          "eventId": 2248,
+          "rating": 32.156
+        },
+        {
+          "place": 1,
+          "name": "Akasec CTF 2024",
+          "eventId": 2222,
+          "rating": 46.3
+        },
+        {
+          "place": 4,
+          "name": "GPN CTF 2024",
+          "eventId": 2257,
+          "rating": 24.924
+        },
+        {
+          "place": 38,
+          "name": "PlaidCTF 2024",
+          "eventId": 2245,
+          "rating": 17.818
+        },
+        {
+          "place": 7,
+          "name": "SwampCTF 2024",
+          "eventId": 2138,
+          "rating": 40.214
+        },
+        {
+          "place": 5,
+          "name": "UTCTF 2024",
+          "eventId": 2302,
+          "rating": 50.579
+        },
+        {
+          "place": 3,
+          "name": "JerseyCTF IV",
+          "eventId": 2230,
+          "rating": 26.788
+        },
+        {
+          "place": 4,
+          "name": "WolvCTF 2024",
+          "eventId": 2240,
+          "rating": 38.305
+        },
+        {
+          "place": 14,
+          "name": "Cyber Apocalypse 2024: Hacker Royale",
+          "eventId": 2255,
+          "rating": 26.249
+        },
+        {
+          "place": 20,
+          "name": "bi0sCTF 2024",
+          "eventId": 2117,
+          "rating": 26.411
+        },
+        {
+          "place": 5,
+          "name": "BraekerCTF",
+          "eventId": 2181,
+          "rating": 18.006
+        },
+        {
+          "place": 17,
+          "name": "LA CTF 2024",
+          "eventId": 2102,
+          "rating": 18.667
+        },
+        {
+          "place": 9,
+          "name": "0xL4ugh CTF 2024",
+          "eventId": 2216,
+          "rating": 14.107
+        },
+        {
+          "place": 39,
+          "name": "DiceCTF 2024 Quals",
+          "eventId": 2217,
+          "rating": 17.617
+        },
+        {
+          "place": 67,
+          "name": "Insomni'hack teaser 2024",
+          "eventId": 2139,
+          "rating": 5.235
+        },
+        {
+          "place": 3,
+          "name": "UofTCTF 2024",
+          "eventId": 2219,
+          "rating": 29.312
+        },
+        {
+          "place": 8,
+          "name": "IrisCTF 2024",
+          "eventId": 2085,
+          "rating": 14.638
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "rank": 62,
+      "points": 361.436,
+      "results": [
+        {
+          "place": 9,
+          "name": "BackdoorCTF 2023",
+          "eventId": 2153,
+          "rating": 29.966
+        },
+        {
+          "place": 30,
+          "name": "0CTF/TCTF 2023",
+          "eventId": 2073,
+          "rating": 8.915
+        },
+        {
+          "place": 5,
+          "name": "NewportBlakeCTF 2023",
+          "eventId": 2072,
+          "rating": 27.25
+        },
+        {
+          "place": 15,
+          "name": "GlacierCTF 2023",
+          "eventId": 1992,
+          "rating": 12.705
+        },
+        {
+          "place": 7,
+          "name": "Square CTF 2023",
+          "eventId": 2111,
+          "rating": 27.168
+        },
+        {
+          "place": 11,
+          "name": "M*CTF 2023 Quals",
+          "eventId": 2096,
+          "rating": 12.534
+        },
+        {
+          "place": 27,
+          "name": "LakeCTF Quals 23",
+          "eventId": 2069,
+          "rating": 7.219
+        },
+        {
+          "place": 2,
+          "name": "BlueHens CTF 2023",
+          "eventId": 2126,
+          "rating": 36.915
+        },
+        {
+          "place": 163,
+          "name": "DefCamp Capture the Flag (D-CTF) 2023 Quals",
+          "eventId": 2106,
+          "rating": 0.75
+        },
+        {
+          "place": 5,
+          "name": "TCP1P CTF 2023: First Step Beyond Nusantara",
+          "eventId": 2001,
+          "rating": 22.211
+        },
+        {
+          "place": 3,
+          "name": "SunshineCTF 2023",
+          "eventId": 2079,
+          "rating": 45.453
+        },
+        {
+          "place": 3,
+          "name": "BuckeyeCTF 2023",
+          "eventId": 2074,
+          "rating": 44.554
+        },
+        {
+          "place": 13,
+          "name": "vsCTF 2023",
+          "eventId": 2053,
+          "rating": 15.082
+        },
+        {
+          "place": 23,
+          "name": "ASIS CTF Quals 2023",
+          "eventId": 1952,
+          "rating": 18.63
+        },
+        {
+          "place": 41,
+          "name": "CSAW CTF Qualification Round 2023",
+          "eventId": 2087,
+          "rating": 13.104
+        },
+        {
+          "place": 77,
+          "name": "HITCON CTF 2023 Quals",
+          "eventId": 2019,
+          "rating": 5.077
+        },
+        {
+          "place": 15,
+          "name": "DownUnderCTF 2023",
+          "eventId": 1954,
+          "rating": 30.904
+        },
+        {
+          "place": 15,
+          "name": "SekaiCTF 2023",
+          "eventId": 1923,
+          "rating": 11.802
+        },
+        {
+          "place": 5,
+          "name": "Bauhinia CTF 2023",
+          "eventId": 1960,
+          "rating": 18.784
+        },
+        {
+          "place": 3,
+          "name": "Lexington Informatics Tournament CTF 2023",
+          "eventId": 2052,
+          "rating": 39.864
+        },
+        {
+          "place": 30,
+          "name": "corCTF 2023",
+          "eventId": 1928,
+          "rating": 8.485
+        },
+        {
+          "place": 19,
+          "name": "ImaginaryCTF 2023",
+          "eventId": 2015,
+          "rating": 12.979
+        },
+        {
+          "place": 47,
+          "name": "zer0pts CTF 2023",
+          "eventId": 1972,
+          "rating": 12.895
+        },
+        {
+          "place": 40,
+          "name": "Crypto CTF 2023",
+          "eventId": 1857,
+          "rating": 14.586
+        },
+        {
+          "place": 33,
+          "name": "UIUCTF 2023",
+          "eventId": 1899,
+          "rating": 16.264
+        },
+        {
+          "place": 99,
+          "name": "Google Capture The Flag 2023",
+          "eventId": 1929,
+          "rating": 8.952
+        },
+        {
+          "place": 24,
+          "name": "NahamCon CTF 2023",
+          "eventId": 2023,
+          "rating": 23.876
+        },
+        {
+          "place": 14,
+          "name": "n00bzCTF 2023",
+          "eventId": 1895,
+          "rating": 14.471
+        },
+        {
+          "place": 11,
+          "name": "GPN CTF 2023",
+          "eventId": 1965,
+          "rating": 10.391
+        },
+        {
+          "place": 4,
+          "name": "DanteCTF 2023",
+          "eventId": 2000,
+          "rating": 27.452
+        },
+        {
+          "place": 89,
+          "name": "DEF CON CTF Qualifier 2023",
+          "eventId": 1871,
+          "rating": 2.731
+        },
+        {
+          "place": 37,
+          "name": "VolgaCTF 2023 Qualifier",
+          "eventId": 1847,
+          "rating": 9.088
+        },
+        {
+          "place": 39,
+          "name": "m0leCon CTF 2023 Teaser",
+          "eventId": 1898,
+          "rating": 8.436
+        },
+        {
+          "place": 45,
+          "name": "PwnMe Qualifications : \"8 bits\"",
+          "eventId": 1924,
+          "rating": 7.021
+        },
+        {
+          "place": 16,
+          "name": "UMDCTF 2023",
+          "eventId": 1949,
+          "rating": 26.348
+        },
+        {
+          "place": 39,
+          "name": "ångstromCTF 2023",
+          "eventId": 1859,
+          "rating": 51.909
+        },
+        {
+          "place": 39,
+          "name": "PlaidCTF 2023",
+          "eventId": 1770,
+          "rating": 24.069
+        },
+        {
+          "place": 57,
+          "name": "DamCTF 2023",
+          "eventId": 1872,
+          "rating": 8.553
+        },
+        {
+          "place": 44,
+          "name": "Bucket CTF 2023",
+          "eventId": 1892,
+          "rating": 9.93
+        },
+        {
+          "place": 52,
+          "name": "VishwaCTF 2023",
+          "eventId": 1904,
+          "rating": 6.968
+        }
+      ]
+    }
+  ],
+  "organized": [
+    {
+      "name": "L3akCTF 2026",
+      "eventId": 3061,
+      "weight": 34.47
+    },
+    {
+      "name": "L3akCTF 2025",
+      "eventId": 2629,
+      "weight": 24.43
+    },
+    {
+      "name": "L3akCTF 2024",
+      "eventId": 2322,
+      "weight": 24.43
+    }
+  ]
+}

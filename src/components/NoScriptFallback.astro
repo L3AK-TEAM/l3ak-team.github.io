@@ -1,0 +1,30 @@
+---
+import type { Writeup } from "../lib/writeups";
+
+interface Props {
+  writeups: Writeup[];
+}
+
+const { writeups } = Astro.props;
+---
+
+<div id="fallback">
+  <h1>L3ak</h1>
+  <p>
+    International CTF team of security researchers. We break things and write
+    down how.
+  </p>
+
+  <h2>Writeups</h2>
+  <ul>
+    {
+      writeups.map((w) => (
+        <li>
+          <a href={w.url}>
+            {w.event} - {w.chal} - {w.cat} - {w.date}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

@@ -1,0 +1,101 @@
+---
+// A page rendered as `man` would show it in a terminal: the header/footer
+// lines inside the pager. The body goes in the slot as
+// <section><h2>NAME</h2>…</section> blocks.
+import Pager from "./Pager.astro";
+
+interface Props {
+  name: string;
+  section: number;
+  manual: string;
+}
+
+const { name, section, manual } = Astro.props;
+const ref = `${name.toUpperCase()}(${section})`;
+const date = new Date().toLocaleString("en", { month: "long", year: "numeric" });
+---
+
+<Pager command={`man ${section} ${name}`} prompt={`Manual page ${name}(${section})`} style="man">
+  <article class="man">
+    <header class="man-rule">
+      <span>{ref}</span><span class="manual">{manual}</span><span>{ref}</span>
+    </header>
+    <slot />
+    <footer class="man-rule">
+      <span>l3ak.team</span><span>{date}</span><span>{ref}</span>
+    </footer>
+  </article>
+</Pager>
+
+<style>
+  .man {
+    max-width: 88ch;
+    color: var(--muted);
+  }
+
+  .man-rule {
+    display: flex;
+    justify-content: space-between;
+    gap: 2ch;
+    color: var(--fg);
+  }
+
+  .man > :global(section) {
+    margin-top: 1lh;
+  }
+
+  .man > :global(section) + footer {
+    margin-top: 1lh;
+  }
+
+  /* Section headings are bold, flush left; everything under them is indented
+     seven cells, the way groff lays out man(7). */
+  .man :global(h2) {
+    font: inherit;
+    font-weight: 700;
+    color: var(--fg);
+    margin: 0;
+  }
+
+  .man :global(h2 ~ *) {
+    margin: 0 0 0 7ch;
+  }
+
+  .man :global(p + p) {
+    margin-top: 1lh;
+  }
+
+  .man :global(b) {
+    color: var(--fg);
+    font-weight: 700;
+  }
+
+  /* Terminal man renders italics as underline. */
+  .man :global(i) {
+    font-style: normal;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .man :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 3px;
+  }
+
+  .man :global(a:hover) {
+    color: var(--accent);
+    text-decoration-color: currentColor;
+  }
+
+  @media (max-width: 640px) {
+    .manual {
+      display: none;
+    }
+
+    .man :global(h2 ~ *) {
+      margin-left: 3ch;
+    }
+  }
+</style>

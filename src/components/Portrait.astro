@@ -1,0 +1,81 @@
+---
+// A member's picture as terminal output: their photo if they have one,
+// otherwise the randomart of their handle. Same box either way.
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import { FIELD_H, FIELD_W, frameRule, randomart } from "../lib/portrait";
+
+interface Props {
+  handle: string;
+  /** A file in src/assets/pfp/. */
+  pfp?: string;
+}
+
+const { handle, pfp } = Astro.props;
+
+const PFPS = import.meta.glob<ImageMetadata>("../assets/pfp/*", { eager: true, import: "default" });
+const photo = pfp ? PFPS[`../assets/pfp/${pfp}`] : undefined;
+if (pfp && !photo) throw new Error(`Portrait: no src/assets/pfp/${pfp} for ${handle}`);
+
+// The field in pixels, at 2x the 14px body size.
+const PX = 14 * 2;
+const width = Math.round(FIELD_W * 0.6 * PX);
+const height = Math.round(FIELD_H * 1.6 * PX);
+
+const art = photo ? undefined : randomart(handle);
+// ssh-keygen labels the bottom rule with the hash; a photo gets its format.
+// The top rule goes untitled: the handle is printed right beside the box.
+const top = frameRule("");
+const bottom = frameRule(photo ? photo.format.toUpperCase() : "MD5");
+const sides = Array.from({ length: FIELD_H }, () => "|").join("\n");
+---
+
+<div
+  class="portrait"
+  role={photo ? undefined : "img"}
+  aria-label={photo ? undefined : `Randomart generated from ${handle}`}
+  style={`--w: ${FIELD_W + 2}ch; --h: ${FIELD_H}lh`}
+>
+  <div>{top}</div>
+  {
+    photo ? (
+      <div class="field">
+        <span>{sides}</span>
+        <Image src={photo} alt={`${handle}'s profile picture`} width={width} height={height} fit="cover" />
+        <span>{sides}</span>
+      </div>
+    ) : (
+      art!.map((row) => <div>|<span class="art">{row}</span>|</div>)
+    )
+  }
+  <div>{bottom}</div>
+</div>
+
+<style>
+  .portrait {
+    width: var(--w);
+    white-space: pre;
+    color: var(--dim);
+    flex: none;
+  }
+
+  .portrait > div {
+    display: flex;
+    height: 1lh;
+  }
+
+  .portrait > .field {
+    height: var(--h);
+  }
+
+  .field img {
+    display: block;
+    width: calc(var(--w) - 2ch);
+    height: var(--h);
+    object-fit: cover;
+  }
+
+  .art {
+    color: var(--muted);
+  }
+</style>

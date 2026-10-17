@@ -1,0 +1,137 @@
+---
+// `man 7 l3ak-team` — the roster as a manual page, one section per rank.
+import Layout from "../layouts/Layout.astro";
+import ManPage from "../components/ManPage.astro";
+import Portrait from "../components/Portrait.astro";
+import { META } from "../data/site";
+import { MEMBERS, RANKS, memberLinks } from "../data/members";
+
+const groups = RANKS.map((rank) => ({
+  rank,
+  members: MEMBERS.filter((m) => m.rank === rank),
+})).filter((g) => g.members.length > 0);
+---
+
+<Layout title={`Team - ${META.title}`} description="The L3ak roster.">
+  <ManPage name="l3ak-team" section={7} manual="L3ak Team Manual">
+    <section>
+      <h2>NAME</h2>
+      <p>l3ak-team - who plays for L3ak</p>
+    </section>
+
+    <section>
+      <h2>DESCRIPTION</h2>
+      <p>
+        L3ak is an international CTF team of security researchers. The {MEMBERS.length} members
+        are listed below by rank, each with the categories they play.
+      </p>
+      <p>
+        Members without a picture are drawn as the randomart of their handle, the way{" "}
+        <b>ssh-keygen</b>(1) draws a key.
+      </p>
+    </section>
+
+    {
+      groups.map((g) => (
+        <section aria-labelledby={`g-${g.rank}`}>
+          <h2 id={`g-${g.rank}`}>{g.rank.toUpperCase()}S</h2>
+          {g.rank === "member" ? (
+            // Members get no picture or bio: one line each, handle then focus.
+            <ul class="roll">
+              {g.members.map((m) => (
+                <li>
+                  <b>{m.handle}</b>
+                  <span>
+                    {m.focus.map((f, i) => (
+                      <>{i > 0 && ", "}<i>{f}</i></>
+                    ))}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul class="members">
+              {g.members.map((m) => (
+                <li class="member">
+                  <Portrait handle={m.handle} pfp={m.pfp} />
+                  <div class="body">
+                    <b>{m.handle}</b>
+                    <div>
+                      {m.focus.map((f, i) => (
+                        <>{i > 0 && ", "}<i>{f}</i></>
+                      ))}
+                    </div>
+                    {m.bio && <p class="bio">{m.bio}</p>}
+                    {memberLinks(m).map((l) => (
+                      <div>
+                        <a href={l.href} rel="me noopener">{l.href.replace(/^https?:\/\//, "")}</a>
+                      </div>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))
+    }
+
+    <section>
+      <h2>SEE ALSO</h2>
+      <p>
+        <a href="/writeups/">l3ak-writeups</a>(7), <a href="/contests/">l3ak-contests</a>(7),{" "}
+        <a href="https://man.openbsd.org/ssh-keygen.1">ssh-keygen</a>(1)
+      </p>
+    </section>
+  </ManPage>
+</Layout>
+
+<style>
+  .members {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1lh;
+  }
+
+  .member {
+    display: flex;
+    gap: 3ch;
+    align-items: start;
+  }
+
+  .body {
+    min-width: 0;
+    max-width: 60ch;
+  }
+
+  .body b {
+    display: block;
+  }
+
+  .bio {
+    margin: 1lh 0 0;
+  }
+
+  /* Handles in one column wide enough for any of them, focus after. */
+  .roll {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 3ch;
+  }
+
+  .roll li {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 640px) {
+    .member {
+      flex-direction: column;
+      gap: 1lh;
+    }
+  }
+</style>
